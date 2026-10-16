@@ -29,12 +29,12 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 <script lang="ts" setup>
 import { onBeforeUnmount, onMounted, ref, shallowRef, computed } from 'vue';
+import { instanceName } from '@@/js/config';
 import MkModal from '@/components/MkModal.vue';
 import MkButton from '@/components/MkButton.vue';
 import MkSwitch from '@/components/MkSwitch.vue';
 import { i18n } from '@/i18n.js';
 import { store } from '@/store.js';
-import { instanceName } from '@@/js/config';
 
 type Result = string | number | true | null;
 
@@ -55,6 +55,7 @@ const domain = computed(() => new URL(props.url).hostname);
 // overload function を使いたいので lint エラーを無視する
 function done(canceled: true): void;
 function done(canceled: false, result: Result): void; // eslint-disable-line no-redeclare
+
 function done(canceled: boolean, result?: Result): void { // eslint-disable-line no-redeclare
 	emit('done', { canceled, result } as { canceled: true } | { canceled: false, result: Result });
 	modal.value?.close();
@@ -82,11 +83,11 @@ function onKeydown(evt: KeyboardEvent) {
 }
 
 onMounted(() => {
-	document.addEventListener('keydown', onKeydown);
+	window.document.addEventListener('keydown', onKeydown);
 });
 
 onBeforeUnmount(() => {
-	document.removeEventListener('keydown', onKeydown);
+	window.document.removeEventListener('keydown', onKeydown);
 });
 </script>
 

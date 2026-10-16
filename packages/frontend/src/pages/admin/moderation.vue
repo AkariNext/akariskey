@@ -171,13 +171,10 @@ import FormLink from '@/components/form/link.vue';
 import MkFolder from '@/components/MkFolder.vue';
 import MkSelect from '@/components/MkSelect.vue';
 
-
 const meta = await misskeyApi('admin/meta');
-
 
 // 本家に無い設定項目
 const trustedLinkUrlPatterns = ref<string>(meta.trustedLinkUrlPatterns.join('\n'));
-
 
 const enableRegistration = ref(!meta.disableRegistration);
 const emailRequiredForSignup = ref(meta.emailRequiredForSignup);

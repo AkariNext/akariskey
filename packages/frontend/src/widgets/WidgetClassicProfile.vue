@@ -21,30 +21,28 @@ SPDX-License-Identifier: AGPL-3.0-only
 </template>
 
 <script lang="ts" setup>
-import { useWidgetPropsManager } from './widget';
-import type { Widget, WidgetComponentExpose } from './widget';
-import type { GetFormResultType } from '@/utility/form';
-import { userPage } from '@/filters/user';
-import { i18n } from '@/i18n';
-import { chooseDriveFile } from '@/utility/drive';
-import * as os from '@/os';
+import type * as Misskey from 'misskey-js';
+import { useWidgetPropsManager } from './widget.js';
+import type { WidgetComponentEmits, WidgetComponentExpose, WidgetComponentProps } from './widget.js';
+import type { FormWithDefault, GetFormResultType } from '@/utility/form.js';
+import { i18n } from '@/i18n.js';
+import { chooseDriveFile } from '@/utility/drive.js';
+import * as os from '@/os.js';
 import { ensureSignin } from '@/i.js';
-import { claimAchievement } from '@/utility/achievements';
+import { claimAchievement } from '@/utility/achievements.js';
+import { userPage } from '@@/js/user.js';
 
 const $i = ensureSignin();
 
 const name = 'classicProfile';
 
 const widgetPropsDef = {
-};
+} satisfies FormWithDefault;
 
 type WidgetProps = GetFormResultType<typeof widgetPropsDef>;
 
-// 現時点ではvueの制限によりimportしたtypeをジェネリックに渡せない
-//const props = defineProps<WidgetComponentProps<WidgetProps>>();
-//const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
-const props = defineProps<{ widget?: Widget<WidgetProps>; }>();
-const emit = defineEmits<{ (ev: 'updateProps', props: WidgetProps); }>();
+const props = defineProps<WidgetComponentProps<WidgetProps>>();
+const emit = defineEmits<WidgetComponentEmits<WidgetProps>>();
 
 const { widgetProps, configure } = useWidgetPropsManager(name,
 	widgetPropsDef,
@@ -58,8 +56,8 @@ defineExpose<WidgetComponentExpose>({
 	id: props.widget ? props.widget.id : null,
 });
 
-function changeAvatar(ev) {
-	async function done(driveFile) {
+function changeAvatar(ev: MouseEvent) {
+	async function done(driveFile: Misskey.entities.DriveFile) {
 		const i = await os.apiWithDialog('i/update', {
 			avatarId: driveFile.id,
 		});
@@ -107,8 +105,8 @@ function changeAvatar(ev) {
 	}], ev.currentTarget ?? ev.target);
 }
 
-function changeBanner(ev) {
-	async function done(driveFile) {
+function changeBanner(ev: MouseEvent) {
+	async function done(driveFile: Misskey.entities.DriveFile) {
 		const i = await os.apiWithDialog('i/update', {
 			bannerId: driveFile.id,
 		});

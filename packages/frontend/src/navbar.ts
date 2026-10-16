@@ -163,7 +163,7 @@ export const navbarItemDef = reactive<{
 					miLocalStorage.setItem('ui', 'deck');
 					unisonReload();
 				},
-			},{
+			}, {
 				text: i18n.ts.origin,
 				active: ui === 'origin',
 				action: () => {

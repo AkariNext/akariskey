@@ -15,7 +15,8 @@ const isRegExp = /^\/(.+)\/(.*)$/;
 
 export async function warningExternalWebsite(ev: MouseEvent, url: string) {
 	const domain = extractDomain.exec(url)?.[4];
-	const self = !domain || url.startsWith(local);
+	if (!domain) return true;
+	const self = url.startsWith(local);
 	const isTrustedByInstance = self || instance.trustedLinkUrlPatterns.some(expression => {
 		const r = isRegExp.exec(expression);
 		if (r) {
@@ -30,7 +31,7 @@ export async function warningExternalWebsite(ev: MouseEvent, url: string) {
 		ev.stopPropagation();
 
 		const confirm = await new Promise<{ canceled: boolean }>(resolve => {
-			const {dispose} = os.popup(
+			const { dispose } = os.popup(
 				MkUrlWarningDialog,
 				{
 					url,
@@ -41,9 +42,9 @@ export async function warningExternalWebsite(ev: MouseEvent, url: string) {
 					},
 					closed: () => {
 						dispose();
-					}
+					},
 				});
-			});
+		});
 
 		if (confirm.canceled) return false;
 
