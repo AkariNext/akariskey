@@ -1445,6 +1445,10 @@ export interface Locale extends ILocale {
      */
     "hasChildFilesOrFolders": string;
     /**
+     * このフォルダは既定アップロード先に指定されています。削除すると、既定アップロード先は解除され、ファイルはルートにアップロードされます。
+     */
+    "uploadFolderDeletionConfirm": string;
+    /**
      * URLをコピー
      */
     "copyUrl": string;
@@ -4077,6 +4081,10 @@ export interface Locale extends ILocale {
      */
     "cannotUploadBecauseUnallowedFileType": string;
     /**
+     * アップロード先のフォルダが見つかりません。既定アップロード先の設定を確認してください。
+     */
+    "cannotUploadBecauseNoSuchFolder": string;
+    /**
      * ベータ
      */
     "beta": string;
@@ -5221,6 +5229,15 @@ export interface Locale extends ILocale {
      */
     "keepOriginalFilenameDescription": string;
     /**
+     * センシティブなメディアは選択できません
+     */
+    "cannotSelectSensitiveMedia": string;
+    /**
+     * 自分でセンシティブ設定を行っていないのにこのエラーが出ている場合、自動判定によりセンシティブなメディアとされている可能性があります。
+     * サーバーの規則に照らして不要な場合は、ファイルのセンシティブ設定を解除してもう一度お試しください。
+     */
+    "cannotSelectSensitiveMediaDescription": string;
+    /**
      * 説明文はありません
      */
     "noDescription": string;
@@ -6285,6 +6302,14 @@ export interface Locale extends ILocale {
          * 環境によっては有効化できない場合があります。
          */
         "settingsPersistence_description2": string;
+        /**
+         * URLプレビューの埋め込みプレイヤーを自動再生
+         */
+        "autoplayEmbededPlayerOfUrlPreview": string;
+        /**
+         * URLプレビューを自動展開
+         */
+        "expandUrlPreviewAutomatically": string;
         "_chat": {
             /**
              * 送信者の名前を表示
